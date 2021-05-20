@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8"> 
+   <title>中文書籍</title>
+   <script type="text/javascript"></script>
+   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<script>
+function all(){
+var a=document.getElementById('cost').getAttribute('cans');
+document.write(a);
+};
+</script>
+
+<div class="col-lg-10 col-md-offset-1" style="font-size: 150%;  background-color:#3C3C3C;">
+<ul class="nav nav-pills">
+        <li class="col-lg-2"style="text-align:center;" ><a href="http://localhost:5000/buy" style="color:#FF5809;">Home</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/chinese" style="color:#FF5809;">中文書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/english" style="color:#FF5809;">英文書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/kid" style="color:#FF5809;">兒童書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/magazine" style="color:#FF5809;">雜誌</a></li>
+        <li class="col-lg-1"style="text-align:center;"><a href="http://localhost:5000/shopping" style="color:#FF5809;">購物車</a></li>
+
+</ul>
+</div>
+
+
+
+
+
+
+
+
+<div class="col-lg-12 "style="border-bottom-style:solid;" >
+        <div class="col-lg-10 col-md-offset-1">
+                <font size=50px>購物車</font>
+        </div>
+</div>
+
+<div class="col-lg-12" style="height:30px;"></div>
+
+<div class="col-lg-10 col-md-offset-1">
+<table border='3' width="100%">
+    <tr>
+        <td width="20%"><font size="5">商品資訊</td>
+	<td width="20%"><font size="5>">價錢</td>
+	<td width="20%"><font size="5">數量</td>
+        <td width="20%"><font size="5>">總計</td>
+        <td width="20%"></td>
+
+    </tr>
+
+
+</table>
+</div>
+
+<table border='3' width="100%">
+
+
+
+{%for i in content%}
+<tr>
+<td><img src="{{i[2]}}" height="180" with="136.6">{{i[4]}}</td>
+<td><span id="cost">{{i[3]}}</span></td>
+
+<td>
+
+<input class="but"type="button"id="sub" onclick="b_sub()"  value="-">
+<input id="1" type="text" name="need"value="{{i[1]}}" style="width:50px; text-align:center;">
+<input class="but"type="button" onclick="b_add()"value="+">
+
+</td>
+
+<td>
+<span id="all">{{i[3]}}</span>
+</td>
+
+
+
+
+
+
+
+
+
+
+</tr>
+{%endfor%}
+
+
+
+</table>
+
+
+
+
+
+
+
+<script>
+function b_add() {
+	var buy=document.getElementById("1");
+        var buyadd=buy.value;
+        if(buyadd > 0){ 
+        document.getElementById('sub').disabled=false;
+        }
+        buyadd++;
+        buy.value=buyadd;
+}
+
+function b_sub() {
+        var buy=document.getElementById("1");
+        var buyadd=buy.value;
+        if(buyadd < 3){ 
+        document.getElementById('sub').disabled=true;
+        }
+        buyadd--;
+        buy.value=buyadd;
+}
+
+$(function(){
+$(".but").click( function() {
+  var cost=document.getElementById("cost");
+  var int_cost=cost.innerHTML;	
+  var need=document.getElementById("1");
+  var int_need=need.value;
+  var ans= int_cost*int_need;
+  document.getElementById("all").innerHTML=ans;
+});
+});
+
+
+
+$(function(){
+  var cost=document.getElementById("cost");
+  var int_cost=cost.innerHTML;  
+  var need=document.getElementById("1");
+  var int_need=need.value;
+  var ans= int_cost*int_need;
+  document.getElementById("all").innerHTML=ans;
+
+});
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

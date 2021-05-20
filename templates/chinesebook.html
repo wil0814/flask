@@ -1,9 +1,158 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>This is a title</title>
-  </head>
-  <body>
-    <p>Hello world! ch</p>
-  </body>
+<head>
+   <meta charset="utf-8"> 
+   <title>中文書籍</title>
+   <script type="text/javascript"></script>
+   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="col-lg-10 col-md-offset-1" style="font-size: 150%;  background-color:#3C3C3C;">
+<ul class="nav nav-pills">
+        <li class="col-lg-2"style="text-align:center;" ><a href="http://localhost:5000/buy" style="color:#FF5809;">Home</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/chinese" style="color:#FF5809;">中文書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/english" style="color:#FF5809;">英文書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/kid" style="color:#FF5809;">兒童書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/magazine" style="color:#FF5809;">雜誌</a></li>
+        <li class="col-lg-1"style="text-align:center;"><a href="http://localhost:5000/shopping" style="color:#FF5809;">購物車</a></li>
+
+</ul>
+</div>
+
+
+
+
+
+
+
+
+<div class="col-lg-12 "style="border-bottom-style:solid;" >
+        <div class="col-lg-10 col-md-offset-1">
+                <font size=50px>中文書籍</font>
+        </div>
+</div>
+
+<div class="col-lg-12" style="height:30px;"></div>
+<div class="col-lg-12 "style=" height:200px;" >
+<div class="col-lg-10 col-md-offset-1">
+        <table border='0'>
+                <tr>
+
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0001"><img src="{{content[0][2]}}" height="180"></a></td>
+
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0002"><img src="{{content[1][2]}}" height="180"></td>
+		<td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0003"><img src="{{content[2][2]}}" height="180"></td>
+
+
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0004"><img src="{{content[3][2]}}" height="180"></td>
+
+                <td style="width:180px;"></td>
+
+                </tr>
+                <tr>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0001" style="color:black;">{{content[0][3]}}</a></td>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0002" style="color:black;">{{content[1][3]}}</a></td>
+                <td style="height:180px;"></td>
+		<td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0003" style="color:black;">{{content[2][3]}}</a></td>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0003" style="color:black;">{{content[3][3]}}</a></td>
+                <td style="height:180px;"></td>
+                </tr>
+
+                </table>
+        </div>
+
+
+
+</div>
+
+<div class="col-lg-12" style="height:30px;"></div>
+<div class="col-lg-12 "style=" height:200px;" >
+<div class="col-lg-10 col-md-offset-1">
+        <table border='0'>
+                <tr>
+
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0005"><img src="{{content[4][2]}}" height="180"></a></td>
+
+		<td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0006"><img src="{{content[5][2]}}" height="180"></td>
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0007"><img src="{{content[6][2]}}" height="180"></td>
+
+
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0008"><img src="{{content[7][2]}}" height="180"></td>
+
+                <td style="width:180px;"></td>
+
+                </tr>
+                <tr>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0005" style="color:black;">{{content[4][3]}}</a></td>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0006" style="color:black;">{{content[5][3]}}</a></td>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0007" style="color:black;">{{content[6][3]}}</a></td>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0008" style="color:black;">{{content[7][3]}}</a></td>
+                <td style="height:180px;"></td>
+                </tr>
+                </table>
+        </div>
+</div>
+
+<div class="col-lg-12" style="height:30px;"></div>
+<div class="col-lg-12 "style=" height:200px;" >
+<div class="col-lg-10 col-md-offset-1">
+        <table border='0'>
+                <tr>
+
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/0009"><img src="{{content[8][2]}}" height="180"></a></td>
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/00010"><img src="{{content[9][2]}}" height="180"></td>
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/00011"><img src="{{content[10][2]}}" height="180"></td>
+                <td style="width:180px;"></td>
+                <td align="center" style=" width:180px;"><a href="http://localhost:5000/buy/00012"><img src="{{content[11][2]}}" height="180"></td>
+
+                <td style="width:180px;"></td>
+
+                </tr>
+                <tr>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/0009" style="color:black;">{{content[8][3]}}</a></td>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/00010" style="color:black;">{{content[9][3]}}</a></td>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/00011" style="color:black;">{{content[10][3]}}</a></td>
+                <td style="height:180px;"></td>
+                <td style="height:180px;"align="center"valign="top"><a href="http://localhost:5000/buy/00012" style="color:black;">{{content[11][3]}}</a></td>
+                <td style="height:180px;"></td>
+                </tr>
+                </table>
+        </div>
+</div>
+
+
+</body>
 </html>
+
+
+
+
+
+
+
+
+
