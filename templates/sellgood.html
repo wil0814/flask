@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8"> 
+   <title>中文書籍</title>
+   <script type="text/javascript"></script>
+   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+
+<div class="col-lg-10 col-md-offset-1" style="font-size: 150%;  background-color:#3C3C3C;">
+<ul class="nav nav-pills">
+        <li class="col-lg-2"style="text-align:center;" ><a href="http://localhost:5000/buy" style="color:#FF5809;">Home</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/chinese" style="color:#FF5809;">中文書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/english" style="color:#FF5809;">英文書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/kid" style="color:#FF5809;">兒童書</a></li>
+        <li class="col-lg-2"style="text-align:center;"><a href="http://localhost:5000/sellgood" style="color:#FF5809;">暢銷排行榜</a></li>
+        <li class="col-lg-1"style="text-align:center;"><a href="http://localhost:5000/shopping" style="color:#FF5809;">購物車</a></li>
+
+</ul>
+</div>
+
+
+
+
+
+
+
+
+<div class="col-lg-12 "style="border-bottom-style:solid;" >
+        <div class="col-lg-10 col-md-offset-1">
+                <font size=50px>暢銷書排名</font>
+        </div>
+</div>
+
+
+
+<div class="col-lg-10 col-md-offset-1">
+<table border='0' width="100%" style="color:white;background-color:black">
+    <tr>
+        <td width="60%"><font size="5">商品資訊</td>
+	<td width="10%" style="text-align:center;"><font size="5>">價錢</td>
+	<td width="10%" style="text-align:center;"><font size="5">數量</td>
+        <td width="10%" style="text-align:center;"><font size="5>">出版日期</td>
+        <td width="10%" style="text-align:center;"></td>
+
+    </tr>
+
+
+</table>
+</div>
+
+
+<div class="col-lg-10 col-md-offset-1">
+<table border='0' width="100%">
+
+{%for i in content%}
+<tr>
+<td width="60%"><img src="{{i[3]}}" height="180" with="136.6">{{i[2]}}</td>
+<td width="10%" style="text-align:center;font-size:20px;font-weight:bold"><span >{{i[4]}}</span></td>
+
+<td width="10%" style="text-align:center;font-size:20px;font-weight:bold"><span>{{i[1]}}</span></td>
+
+<td width=10% style="text-align:center;font-size:20px;"><span>{{i[5]}}</span></td>
+<td width="10%" style="text-align:center;"></td>
+</form>
+
+</td>
+</tr>
+{%endfor%}
+</table>
+</div>
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

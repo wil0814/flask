@@ -1,19 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
-<body>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul class="flash">
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    hello, {{ username }}, Welcome my homepage!
+<body>	
+
+	
+	<div id="longdata" long="{{longdata}}"></div>
+
+	
+	
+
+
+
+
+
+
+
+
+
+<script >
+
+$(document).ready(function () {
+var student = new Object();
+student.name = "Peng Shuang";
+student.age = 23;
+student.location = "China";
+var data = JSON.stringify(student)
+$.ajax({
+url: "/login",
+type: "POST",
+data: data,
+success: function (msg) {
+alert(msg.time)
+}
+})
+})
+
+
+
+
+
+
+
+
+
+
+
+</script>
 </body>
 </html>

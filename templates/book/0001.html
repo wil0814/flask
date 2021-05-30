@@ -10,6 +10,7 @@
 
 </head>
 <body>
+<div id="have" a={{content[0][10]}}></div>
 <div class="col-lg-10 col-md-offset-1" style="font-size: 150%;  background-color:#3C3C3C;">
 <ul class="nav nav-pills">
         <li class="col-lg-2"style="text-align:center;" ><a href="http://localhost:5000/buy" style="color:#FF5809;">Home</a></li>
@@ -51,13 +52,13 @@
 
                          <form action="/shopping" method="post">
 			 <input type="button"id="sub" disabled="disabled"  onclick="b_sub()" value="-">                         
-			 <input id="buy" type="text" name="need"value="1" style="width:50px; text-align:center;">
-                         <input type="button" onclick="b_add()"value="+">
+			 <input id="buy" type="text" name="need"value="0" style="width:50px; text-align:center;">
+                         <input type="button" id="add" onclick="b_add()"value="+">
 			 <input type="hidden"  name="num" value="{{content[0][0]}}">                                                
                          <input type="hidden"  name="photo" value="{{content[0][2]}}">
                          <input type="hidden"  name="cost" value="{{content[0][9]}}">
 			 <input type="hidden"  name="book" value="{{content[0][4]}}"> 
-                         <input type="submit"  value="加到購物車">
+                         <input type="submit" id="shop" value="加到購物車">
 			 </form>
 			 
 
@@ -81,27 +82,44 @@
 
 <script>
 function b_add() {
+	var have = document.getElementById('have').getAttribute('a');
 	var buy=document.getElementById('buy');
 	var buyadd=buy.value;
-	if(buyadd > 0){	
-	document.getElementById('sub').disabled=false;
-	}
 	buyadd++;
-	buy.value=buyadd;
+        buy.value=buyadd;
+	if (buyadd == have){
+	        document.getElementById('add').disabled=true;
+	}else{
+		if(buyadd > 0){	
+		document.getElementById('sub').disabled=false;
+		}		
+	}
 }
 
 function b_sub() {
+	var have = document.getElementById('have').getAttribute('a');
         var buy=document.getElementById('buy');
         var buyadd=buy.value;
-        if(buyadd < 3){ 
-        document.getElementById('sub').disabled=true;
-        }
-        buyadd--;
-        buy.value=buyadd;
+	buyadd--;
+	buy.value=buyadd;
+	document.getElementById('add').disabled=false;
+       	if(buyadd < 2){ 
+        	document.getElementById('sub').disabled=true;
+       	}   		
+	
+	
+        
 }
 
 
-
+$(function(){
+	var have = document.getElementById('have').getAttribute('a');
+	if(have==0){
+		document.getElementById('add').disabled=true;
+		document.getElementById('shop').disabled=true;
+		alert("此書已受空！！！ 補貨中");
+	}
+});
 
 $(function(){
         $(".pimg").click(function(){

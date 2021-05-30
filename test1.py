@@ -1,5 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
-import pymysql
+from flask import Flask, render_template, redirect, url_for, request, flash,jsonify
+import pymysql,json
 app = Flask(__name__)
 
 
@@ -12,23 +12,92 @@ app = Flask(__name__)
 #    charset='utf8'
 #)
 
+@app.route('/addshopping', methods=['GET','POST'])
+def addshopping():
+    conn = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        db='subject',
+        charset='utf8'
+        )
+    if  request.method == "POST":
+        data = json.loads(request.get_data())
+        did=data["name"]
+        need=data["need"]
+        cur=conn.cursor()
+        sql="update shopping set need='"+need+"' where id='"+did+"';"
+        cur.execute(sql)
+        cur.close()
+        conn.commit()
+ 
 
 
-
-@app.route('/login', methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        if login_check(request.form['test'],request.form['password']):
-            flash('success')
-            flash('ffffff')
-            return redirect(url_for('hello',username=request.form.get('test')))
-    return render_template('login.html')
-
-def login_check(username,password):
-    if username=='admin' and password == 'hello':
-        return True
+        return jsonify(data)
     else:
-        return False
+        return redirect(url_for('shopping'))
+
+
+
+
+
+
+
+
+
+
+@app.route('/buy_all', methods=['GET','POST'])
+def login():
+    conn = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        db='subject',
+        charset='utf8'
+        )
+
+    if  request.method == "POST": 
+        data = json.loads(request.get_data())
+        a=len(data["name"])
+
+        for i in range(a):
+            need=data["need"][i]
+            did=data["name"][i]
+            cur=conn.cursor()
+            sql="update books set have=have-'"+need+"' where id='"+did+"';"
+            cur.execute(sql)
+            cur.close()
+            conn.commit()
+
+            cur=conn.cursor()
+            sql="INSERT INTO sell (id,sell) values('"+did+"','"+need+"');"
+            try:
+                cur.execute(sql)
+                cur.close()
+                conn.commit()
+            except:
+                cur.close()
+                conn.rollback()
+                
+            cur=conn.cursor()
+            sql="update sell set sell=sell+'"+need+"' where id='"+did+"';"
+            cur.execute(sql)
+            cur.close()
+            conn.commit()
+
+            cur=conn.cursor()
+            sql="delete from shopping where id='"+did+"';"
+            cur.execute(sql)
+            cur.close()
+            conn.commit()
+        return jsonify(data) 
+    else: 
+        return redirect(url_for('shopping')) 
+
+
+
+
+
 
 @app.route('/buy')
 def index():
@@ -62,6 +131,44 @@ def chinese():
     cur.close()
     return render_template('chinesebook.html',content=content)
 
+@app.route('/english')
+def english():
+    conn = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        db='subject',
+        charset='utf8'
+        )
+    cur=conn.cursor()
+    sql = "select * from books where class='英文書'"
+    cur.execute(sql)
+    content = cur.fetchall()
+    cur.close()
+    return render_template('english.html',content=content)
+
+
+@app.route('/sellgood')
+def sellgood():
+    conn = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        db='subject',
+        charset='utf8'
+        )
+    cur=conn.cursor()
+    sql = "select sell.id, sell.sell, books.bookname, books.photo, books.money, books.出版日期 from sell inner join books on sell.id=books.id order by sell desc;"
+    cur.execute(sql)
+    content = cur.fetchall()
+    cur.close()
+    return render_template('/sellgood.html',content=content)
+
+
+
+
+
+
 @app.route('/shopping', methods=['GET','POST'])
 def shopping():
     conn = pymysql.connect(
@@ -74,12 +181,8 @@ def shopping():
     if request.method == 'POST':
         num=request.values['num']
         need=request.values['need']
-        photo=request.values['photo']
-        cost=request.values['cost']
-        book=request.values['book']
-        
         cur=conn.cursor()
-        sql="INSERT INTO shopping (id,need,photo,cost,book) values('"+num+"','"+need+"','"+photo+"','"+cost+"','"+book+"');"
+        sql="INSERT INTO shopping (id,need) values('"+num+"','"+need+"');"
         try:
             cur.execute(sql)
             cur.close()
@@ -90,23 +193,121 @@ def shopping():
         
 
         cur=conn.cursor()
-        sql="select * from shopping"
+        #sql="select * from shopping;"
+        #cur.execute(sql)
+        #content = cur.fetchall()
+       # payload=[]                     迴圈跑mysql變成json格式
+       # contentJ={}
+       # for result in content:
+       #     contentJ={'id':result[0]}
+       #     payload.append(contentJ)
+       #     contentJ={}
+
+        sql="select shopping.id, shopping.need, books.photo, books.money, books.bookname  from shopping inner join books on shopping.id=books.id;"
         cur.execute(sql)
         content = cur.fetchall()
+        data = list(map(list,content))
         cur.close()
-        return render_template('/shopping.html',content=content)
+        datalong=len(data)
+        #return render_template('/hello.html')
+        return render_template('/shopping.html',content=data,longdata=datalong)
     
 
 
 
     cur=conn.cursor()
-    sql="select * from shopping"
+    sql="select shopping.id, shopping.need, books.photo, books.money, books.bookname  from shopping inner join books on shopping.id=books.id;"
     cur.execute(sql)
     content = cur.fetchall()
+    data = list(map(list,content))
     cur.close()
-    return render_template('/shopping.html',content=content)
+    datalong=len(data)
+    return render_template('/shopping.html',content=content,longdata=datalong)
 
     
+
+
+
+@app.route('/shopping/delete', methods=['GET','POST'])
+def delete():
+    conn = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        db='subject',
+        charset='utf8'
+        )
+    if request.method == 'POST':
+        did=request.values['did']
+        cur=conn.cursor()
+        sql="delete from shopping where id='"+did+"';"
+        cur.execute(sql)
+        cur.close()
+        conn.commit()
+        return redirect(url_for('shopping'))
+    return redirect(url_for('shopping'))
+
+
+@app.route('/shopping/buy', methods=['GET','POST'])
+def buy():
+    conn = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        db='subject',
+        charset='utf8'
+        )
+    if request.method == 'POST':
+        did=request.values['did']
+        need=request.values['need']
+        intneed=int(need)
+        cur=conn.cursor()
+        sql = "select have from books where id ='"+did+"';"
+        cur.execute(sql)
+        content = cur.fetchone()
+        cur.close()
+        if  intneed < content[0]:
+            
+            cur=conn.cursor()
+            sql="INSERT INTO sell (id,sell) values('"+did+"','"+need+"');"
+            try:
+                cur.execute(sql)
+                cur.close()
+                conn.commit()
+            except:
+                cur.close()
+                conn.rollback()
+
+
+            cur=conn.cursor()
+            sql="update sell set sell=sell+'"+need+"' where id='"+did+"';"
+            cur.execute(sql)
+            cur.close()
+            conn.commit()
+
+            cur=conn.cursor()
+            sql="update books set have=have-'"+need+"' where id='"+did+"';"
+            cur.execute(sql)
+            cur.close()
+            conn.commit()
+            cur=conn.cursor()
+            sql="select * from books where id ='"+did+"';"
+            cur.execute(sql)
+            content = cur.fetchall()
+            cur.close()
+            cur=conn.cursor()
+            sql="delete from shopping where id='"+did+"';"
+            cur.execute(sql)
+            cur.close()
+            conn.commit()
+            flash('購買成功')
+            return redirect(url_for('shopping'))
+            
+        else:
+            flash('庫純不足')
+            return redirect(url_for('shopping'))
+    
+    return redirect(url_for('shopping'))
 
 
 
@@ -170,7 +371,7 @@ def b0004():
     content = cur.fetchall()
     return render_template('/book/0001.html',content=content)
 
-@app.route('/buy/00012')
+@app.route('/buy/00015')
 def b0005():
     conn = pymysql.connect(
         host='localhost',
@@ -185,7 +386,7 @@ def b0005():
     content = cur.fetchall()
     return render_template('/book/0001.html',content=content)
 
-@app.route('/buy/0005')
+@app.route('/buy/0006')
 def b0006():
     conn = pymysql.connect(
         host='localhost',
@@ -201,7 +402,7 @@ def b0006():
     return render_template('/book/0001.html',content=content)
 
 
-@app.route('/buy/0006')
+@app.route('/buy/0007')
 def b0007():
     conn = pymysql.connect(
         host='localhost',
@@ -217,7 +418,7 @@ def b0007():
     return render_template('/book/0001.html',content=content)
 
 
-@app.route('/buy/0007')
+@app.route('/buy/0008')
 def b0008():
     conn = pymysql.connect(
         host='localhost',
@@ -232,7 +433,7 @@ def b0008():
     content = cur.fetchall()
     return render_template('/book/0001.html',content=content)
 
-@app.route('/buy/0008')
+@app.route('/buy/0009')
 def b0009():
     conn = pymysql.connect(
         host='localhost',
@@ -247,7 +448,7 @@ def b0009():
     content = cur.fetchall()
     return render_template('/book/0001.html',content=content)
 
-@app.route('/buy/0009')
+@app.route('/buy/00010')
 def b00010():
     conn = pymysql.connect(
         host='localhost',
@@ -262,7 +463,7 @@ def b00010():
     content = cur.fetchall()
     return render_template('/book/0001.html',content=content)
 
-@app.route('/buy/00010')
+@app.route('/buy/00011')
 def b00011():
     conn = pymysql.connect(
         host='localhost',
@@ -278,7 +479,7 @@ def b00011():
     return render_template('/book/0001.html',content=content)
 
 
-@app.route('/buy/00011')
+@app.route('/buy/00014')
 def b00012():
     conn = pymysql.connect(
         host='localhost',
@@ -293,7 +494,20 @@ def b00012():
     content = cur.fetchall()
     return render_template('/book/0001.html',content=content)
 
-
+@app.route('/buy/00016')
+def b00016():
+    conn = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        db='subject',
+        charset='utf8'
+        )
+    cur=conn.cursor()
+    sql = "select * from books where bookname ='The Death of Francis Bacon'"
+    cur.execute(sql)
+    content = cur.fetchall()
+    return render_template('/book/0001.html',content=content)
 
 
 
@@ -328,10 +542,6 @@ def mysqltest():
 
 
 
-@app.route('/phototest')
-def phototest():
-
-    return render_template('/book/phototest.html')
 
     
 
